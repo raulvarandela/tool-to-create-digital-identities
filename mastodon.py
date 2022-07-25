@@ -1,3 +1,7 @@
+# Author: Raul Varandela
+# Date: 20/07/22
+# Description: File that use Mastodon API to post.
+
 from urllib import response
 import requests
 import json

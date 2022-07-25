@@ -1,3 +1,7 @@
+# Author: Raul Varandela
+# Date: 20/07/22
+# Description: file that use Twitter API to tweet.
+
 import tweepy
 from DB_connect import getPhase
 

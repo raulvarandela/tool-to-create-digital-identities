@@ -1,3 +1,7 @@
+# Author: Raul Varandela
+# Date: 22/07/22
+# Description: File that connect to the database and get the phase.
+
 import sqlite3
 
 def getPhase():

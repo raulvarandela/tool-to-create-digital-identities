@@ -1,3 +1,7 @@
+# Author: Raul Varandela
+# Date: 20/07/22
+# Description: File that use instagram API to post.
+
 from instagrapi import Client
 
 cl = Client()
