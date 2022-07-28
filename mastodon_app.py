@@ -13,4 +13,4 @@ def toot():
         access_token='ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY',
         api_base_url='https://mstdn.social/'
     )
-    mastodon.toot(DB_connect.getFilosofyPhase())
+    mastodon.toot(DB_connect.getPhase())
