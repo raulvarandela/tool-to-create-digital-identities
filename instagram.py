@@ -3,21 +3,26 @@
 # Description: File that use instagram API to post.
 
 from instagrapi import Client
+import random
+import os
 
-cl = Client()
-#instagram account nº 1
-#cl.login('antonym4166', 'L6poFDhOS8eBECc9sW5L')
-#instagram account nº 2
-cl.login('armentariofigueroacorona', 'UPW40NG3GUY10Zyk7UeL')
+def publish_photo():
+    cl = Client()
+    # instagram account nº 1
+    cl.login('rogeregonzales1', 'L6poFDhOS8eBECc9sW5L')
 
-#upload a photo to the feed
-cl.photo_upload('C:\\Users\\Raul\\Pictures\\Saved Pictures\\skylinemadrid.jpg',caption='test2')
+    # choose a random image from the folder
+    path = r"C:\\Users\\Raul\\Pictures\\TFM\\Insta"
+    random_filename = random.choice([
+        x for x in os.listdir(path)
+        if os.path.isfile(os.path.join(path, x))
+    ])
+
+    # upload a photo to the feed
+    cl.photo_upload(f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' +
+                    random_filename, caption='test2')
 
 
-#upload a photo to story
-cl.photo_upload_to_story('C:\\Users\\Raul\\Pictures\\Saved Pictures\\skylinemadrid.jpg',caption='test2')
-
-#the second user follow the first user
-cl.user_follow(cl.user_id_from_username('antonym4166'))
-
-print("Done!")
+    # upload a photo to story
+    cl.photo_upload_to_story(f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' +
+                            random_filename, caption='test2')

@@ -4,6 +4,12 @@
 
 import sqlite3
 
+def getSakterPhase():
+    con = sqlite3.connect('base de datos.db')
+    cur = con.cursor()
+    for row in cur.execute('SELECT text FROM skate_tweets ORDER BY RANDOM() LIMIT 1;'):
+            return row[0]
+
 def getPhase():
     con = sqlite3.connect('base de datos.db')
     cur = con.cursor()
