@@ -3,8 +3,8 @@
 # Description: file that use Twitter API to tweet.
 
 import tweepy
-from DB_connect import getSakterPhase
-
+from DB_connect import getSkaterPhase
+from DB_connect import getPhase
 
 def tweet():
     consumer_key = 'CCZdCZAHh2ESerJW8C9g7mXXW'
@@ -18,4 +18,4 @@ def tweet():
 
     api = tweepy.API(auth, wait_on_rate_limit=True)
 
-    api.update_status(getSakterPhase())
+    api.update_status(getPhase())

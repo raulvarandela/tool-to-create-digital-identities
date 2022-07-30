@@ -3,26 +3,22 @@
 # Description: File that use instagram API to post.
 
 from instagrapi import Client
-import random
-import os
+from DB_connect import getPhoto
 
-def publish_photo():
+def login():
     cl = Client()
     # instagram account nº 1
     cl.login('rogeregonzales1', 'L6poFDhOS8eBECc9sW5L')
+    return cl
 
-    # choose a random image from the folder
-    path = r"C:\\Users\\Raul\\Pictures\\TFM\\Insta"
-    random_filename = random.choice([
-        x for x in os.listdir(path)
-        if os.path.isfile(os.path.join(path, x))
-    ])
-
-    # upload a photo to the feed
-    cl.photo_upload(f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' +
-                    random_filename, caption='test2')
+# upload a photo to the feed
+def publishPhoto():
+    cl = login()
+    cl.photo_upload(getPhoto(), caption='#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #skating #skateboy #skateboardingisawesome #skatepark #skategirls #skateboardingisforever #skateboardlife #skater #skateboards #skatelife #style #skate #skateboardingisnotacrime')
 
 
-    # upload a photo to story
-    cl.photo_upload_to_story(f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' +
-                            random_filename, caption='test2')
+# upload a photo to story  
+def publishStory():
+    cl = login()
+    cl.photo_upload_to_story(getPhoto(), caption='photo')
+    
