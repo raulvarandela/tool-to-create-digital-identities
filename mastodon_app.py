@@ -3,7 +3,7 @@
 # Description: File that use Mastodon API to post.
 
 
-import DB_connect
+from DB_connect import chooseFuctionMastodon
 from mastodon import Mastodon
 
 
@@ -13,4 +13,4 @@ def toot():
         access_token='ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY',
         api_base_url='https://mstdn.social/'
     )
-    mastodon.toot(DB_connect.getPhase())
+    mastodon.toot(chooseFuctionMastodon())

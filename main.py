@@ -7,11 +7,14 @@ import mastodon_app
 import instagram
 import time
 import schedule
+import random
 
-schedule.every(20).minutes.do(twitter.tweet)
-schedule.every(20).minutes.do(mastodon_app.toot)
-schedule.every(1).day.do(instagram.publishPhoto)
-schedule.every(2).day.do(instagram.publishStory)
+randomNuber = random.randint(5,120)
+
+schedule.every(randomNuber).minutes.do(twitter.tweet)
+schedule.every(randomNuber).minutes.do(mastodon_app.toot)
+schedule.every(1).days.do(instagram.publishPhoto)
+schedule.every(2).days.do(instagram.publishStory)
 
 while True:
     schedule.run_pending()

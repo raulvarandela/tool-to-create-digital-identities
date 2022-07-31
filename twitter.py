@@ -3,10 +3,9 @@
 # Description: file that use Twitter API to tweet.
 
 import tweepy
-from DB_connect import getSkaterPhase
-from DB_connect import getPhase
+from DB_connect import chooseFuctionTwitter, getPhoto
 
-def tweet():
+def login():
     consumer_key = 'CCZdCZAHh2ESerJW8C9g7mXXW'
     consumer_secret = 'hNWRr0RT4AKE2Ww8Xz3EQeYhZQN3UY8sTKmq7H42WrRHGi3S5y'
 
@@ -16,6 +15,16 @@ def tweet():
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
 
-    api = tweepy.API(auth, wait_on_rate_limit=True)
+    return tweepy.API(auth, wait_on_rate_limit=True)
 
-    api.update_status(getPhase())
+
+def tweet():
+    api = login()
+    api.update_status(chooseFuctionTwitter())
+
+def tweetPhoto():
+    api = login()
+    api.update_status_with_media('#skateboard', getPhoto())
+
+
+

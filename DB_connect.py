@@ -7,6 +7,32 @@ import random
 import os
 
 
+def chooseFuctionTwitter():
+    ramdomNumber = random.randint(1,4)
+    if ramdomNumber == 1:
+        return getSkaterPhase()
+    elif ramdomNumber == 2:
+        return getPhase()
+    elif ramdomNumber == 3:
+        return getSetPhase()
+    elif ramdomNumber == 4:
+        return getFilosofyPhase()
+    else:
+        print("Error")
+
+
+def chooseFuctionMastodon():
+    ramdomNumber = random.randint(1,3)
+    if ramdomNumber == 1:
+        return getFilosofyPhase()
+    elif ramdomNumber == 2:
+        return getPhase()
+    elif ramdomNumber == 3:
+        return getSetPhase()
+    else:
+        print("Error")
+
+
 def getSkaterPhase():
     con = sqlite3.connect('base de datos.db')
     cur = con.cursor()
