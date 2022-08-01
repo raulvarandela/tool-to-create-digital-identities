@@ -2,9 +2,15 @@
 # Date: 30/07/22
 # Description: Test Main file for the project.
 
-from twitter import tweet, tweetPhoto
-from mastodon_app import toot
-from instagram import publishPhoto
+import twitter, mastodon_app, instagram
 import random
-tweetPhoto()
 
+
+#instagram.getComments()     
+
+
+#print(instagram.replyUsers())
+#print(instagram.getComments(instagram.login(),'2894619286271353249_54294180895'))
+
+
+instagram.prueba()

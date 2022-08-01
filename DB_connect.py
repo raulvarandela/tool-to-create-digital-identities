@@ -69,3 +69,9 @@ def getPhoto():
         if os.path.isfile(os.path.join(path, x))
     ])
     return f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' + random_filename
+
+def getReply():
+    con = sqlite3.connect('base de datos.db')
+    cur = con.cursor()
+    for row in cur.execute('SELECT text FROM respuestas ORDER BY RANDOM() LIMIT 1;'):
+        return row[0]
