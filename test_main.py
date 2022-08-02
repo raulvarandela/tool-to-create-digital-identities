@@ -5,4 +5,4 @@
 import twitter, mastodon_app, instagram
 
 
-twitter.tweetPhoto()
+mastodon_app.tootPhoto() 
