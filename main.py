@@ -15,6 +15,7 @@ schedule.every(randomNuber).minutes.do(twitter.tweet)
 schedule.every(randomNuber).minutes.do(mastodon_app.toot)
 schedule.every(1).days.do(instagram.publishPhoto)
 schedule.every(2).days.do(instagram.publishStory)
+schedule.every(2).hours.do(instagram.replyUsers)
 
 while True:
     schedule.run_pending()

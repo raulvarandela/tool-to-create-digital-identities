@@ -5,6 +5,7 @@
 import tweepy
 from DB_connect import chooseFuctionTwitter, getPhoto
 
+
 def login():
     consumer_key = 'CCZdCZAHh2ESerJW8C9g7mXXW'
     consumer_secret = 'hNWRr0RT4AKE2Ww8Xz3EQeYhZQN3UY8sTKmq7H42WrRHGi3S5y'
@@ -22,9 +23,9 @@ def tweet():
     api = login()
     api.update_status(chooseFuctionTwitter())
 
+
 def tweetPhoto():
     api = login()
-    api.update_status_with_media('#skateboard', getPhoto())
-
-
-
+    media = api.media_upload(getPhoto())
+    tweet = '#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #sk8'
+    api.update_status(status=tweet, media_ids=[media.media_id])

@@ -7,8 +7,9 @@ import random
 import os
 
 
+# choosea ramdom function to use
 def chooseFuctionTwitter():
-    ramdomNumber = random.randint(1,4)
+    ramdomNumber = random.randint(1, 4)
     if ramdomNumber == 1:
         return getSkaterPhase()
     elif ramdomNumber == 2:
@@ -21,8 +22,9 @@ def chooseFuctionTwitter():
         print("Error")
 
 
+# choosea ramdom function to use
 def chooseFuctionMastodon():
-    ramdomNumber = random.randint(1,3)
+    ramdomNumber = random.randint(1, 3)
     if ramdomNumber == 1:
         return getFilosofyPhase()
     elif ramdomNumber == 2:
@@ -33,30 +35,36 @@ def chooseFuctionMastodon():
         print("Error")
 
 
-def getSkaterPhase():
+def connectToDB():
     con = sqlite3.connect('base de datos.db')
     cur = con.cursor()
+    return cur
+
+
+# get a skater phrase from the database
+def getSkaterPhase():
+    cur = connectToDB()
     for row in cur.execute('SELECT text FROM skate_tweets ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
 
 
+# get a ramdom phrase from the database
 def getPhase():
-    con = sqlite3.connect('base de datos.db')
-    cur = con.cursor()
+    cur = connectToDB()
     for row in cur.execute('SELECT text FROM tweets ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
 
 
+# get a random set phrase from the database
 def getSetPhase():
-    con = sqlite3.connect('base de datos.db')
-    cur = con.cursor()
+    cur = connectToDB()
     for row in cur.execute('SELECT text FROM frases_hechas ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
 
 
+# get a filosofy phrase from the database
 def getFilosofyPhase():
-    con = sqlite3.connect('base de datos.db')
-    cur = con.cursor()
+    cur = connectToDB()
     for row in cur.execute('SELECT text FROM ifilosofia_tweets ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
 
@@ -70,8 +78,9 @@ def getPhoto():
     ])
     return f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' + random_filename
 
+
+# get a random reply from the database
 def getReply():
-    con = sqlite3.connect('base de datos.db')
-    cur = con.cursor()
+    cur = connectToDB()
     for row in cur.execute('SELECT text FROM respuestas ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
