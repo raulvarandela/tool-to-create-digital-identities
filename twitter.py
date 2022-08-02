@@ -3,7 +3,7 @@
 # Description: file that use Twitter API to tweet.
 
 import tweepy
-from DB_connect import chooseFuctionTwitter, getPhoto
+from DB_connect import chooseFuctionTwitter, getPhoto, getDesciption
 
 
 # conect to twitter API
@@ -31,5 +31,5 @@ def tweet():
 def tweetPhoto():
     api = login()
     media = api.media_upload(getPhoto())
-    tweet = '#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #sk8'
+    tweet = f"" + getDesciption() + "\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle "
     api.update_status(status=tweet, media_ids=[media.media_id])

@@ -84,3 +84,9 @@ def getReply():
     cur = connectToDB()
     for row in cur.execute('SELECT text FROM respuestas ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
+
+# get a phrase to use in a photo
+def getDesciption():
+    cur = connectToDB()
+    for row in cur.execute('SELECT text FROM comentarios_fotos ORDER BY RANDOM() LIMIT 1;'):
+        return row[0]

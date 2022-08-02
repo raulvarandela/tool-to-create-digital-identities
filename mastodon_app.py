@@ -3,7 +3,7 @@
 # Description: File that use Mastodon API to post.
 
 
-from DB_connect import chooseFuctionMastodon, getPhoto
+from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption
 from mastodon import Mastodon
 
 
@@ -25,5 +25,5 @@ def toot():
 def tootPhoto():
     mastodon = login()
     media = mastodon.media_post(getPhoto())
-    toot = '#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #skating #skateboy #skateboardingisawesome #skatepark #skategirls #skateboardingisforever #skateboardlife #skater #skateboards #skatelife #style #skate #skateboardingisnotacrime'
-    mastodon.status_post(toot, media_ids=media)
+    mastodon.status_post(
+        f"" + getDesciption() + "\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle ", media_ids=media)
