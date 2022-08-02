@@ -11,11 +11,17 @@ import random
 
 randomNuber = random.randint(5,120)
 
-schedule.every(randomNuber).minutes.do(twitter.tweet)
+#mastodon schedule
 schedule.every(randomNuber).minutes.do(mastodon_app.toot)
+
+#Instagram schedule
 schedule.every(1).days.do(instagram.publishPhoto)
 schedule.every(2).days.do(instagram.publishStory)
 schedule.every(2).hours.do(instagram.replyUsers)
+
+#Twitter schedule
+schedule.every(randomNuber).minutes.do(twitter.tweet)
+schedule.every(1).week.do(twitter.tweetPhoto)
 
 while True:
     schedule.run_pending()
