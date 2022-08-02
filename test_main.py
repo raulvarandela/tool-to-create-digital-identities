@@ -13,4 +13,4 @@ import random
 #print(instagram.getComments(instagram.login(),'2894619286271353249_54294180895'))
 
 
-instagram.prueba()
+instagram.replyUsers()
