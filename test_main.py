@@ -9,4 +9,4 @@ import os
 
 
 
-mastodon_app.retootFromHomeTimeline()
+mastodon_app.favoriteFromPublicTimeline()

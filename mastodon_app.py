@@ -85,3 +85,19 @@ def retootFromHomeTimeline():
     toots = getTootsFromHomeTimeline()
     randomNuber = random.randint(0, len(toots))
     mastodon.status_reblog(toots[randomNuber])
+
+
+# set as favorite a toot from my timeline
+def favoriteFromHomeTimeline():
+    mastodon = login()
+    toots = getTootsFromHomeTimeline()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_favourite(toots[randomNuber])
+
+
+#set as favorite a toot from Mastodon's timeline
+def favoriteFromPublicTimeline():
+    mastodon = login()
+    toots = getTootsFromPublicTimeline()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_favourite(toots[randomNuber])
