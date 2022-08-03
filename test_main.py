@@ -9,5 +9,4 @@ import os
 
 
 
-
-mastodon_app.followUsers()
+mastodon_app.retootFromHomeTimeline()

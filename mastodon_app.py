@@ -3,17 +3,22 @@
 # Description: File that use Mastodon API to post.
 
 
-import json
+import random
 from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption
 from mastodon import Mastodon
 import requests
 
 
+access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
+api_base_url = 'https://mstdn.social/'
+
 # connect to mastodon API
+
+
 def login():
     return Mastodon(
-        access_token='ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY',
-        api_base_url='https://mstdn.social/'
+        access_token = access_token,
+        api_base_url = api_base_url
     )
 
 
@@ -34,7 +39,8 @@ def tootPhoto():
 # get users from Mastodon's diorectory
 def getUsers():
     usersIDs = []
-    temp = requests.get('https://mstdn.social/api/v1/directory?limit=40&order=new').json()
+    temp = requests.get(
+        'https://mstdn.social/api/v1/directory?limit=40&order=new').json()
     for i in temp:
         usersIDs.append(temp.pop().get('id'))
     return usersIDs
@@ -44,4 +50,38 @@ def getUsers():
 def followUsers():
     mastodon = login()
     for i in getUsers():
-            mastodon.account_follow(i)
+        mastodon.account_follow(i)
+
+
+# gets toots from Mastodon's timeline
+def getTootsFromPublicTimeline():
+    tootsIDs = []
+    temp = requests.get('https://mstdn.social/api/v1/timelines/public').json()
+    for i in temp:
+        tootsIDs.append(temp.pop().get('id'))
+    return tootsIDs
+
+
+# get toots from my timeline
+def getTootsFromHomeTimeline():
+    tootsIDs = []
+    temp = requests.get(f'https://mstdn.social/api/v1/timelines/home?access_token=' + access_token).json()
+    for i in temp:
+        tootsIDs.append(temp.pop().get('id'))
+    return tootsIDs
+
+
+# retoots a toot from Mastodon's timeline
+def retootFromPublicTimeline():
+    mastodon = login()
+    toots = getTootsFromPublicTimeline()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_reblog(toots[randomNuber])
+
+
+# retoots a toot from my timeline
+def retootFromHomeTimeline():
+    mastodon = login()
+    toots = getTootsFromHomeTimeline()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_reblog(toots[randomNuber])
