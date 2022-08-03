@@ -4,13 +4,14 @@
 
 
 import random
-from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption
+from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption, getReply
 from mastodon import Mastodon
 import requests
 
 
 access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
+
 
 # connect to mastodon API
 
@@ -33,17 +34,23 @@ def tootPhoto():
     mastodon = login()
     media = mastodon.media_post(getPhoto())
     mastodon.status_post(
-        f"" + getDesciption() + "\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle ", media_ids=media)
+        f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle ", media_ids=media)
 
 
 # get users from Mastodon's diorectory
 def getUsers():
     usersIDs = []
-    temp = requests.get(
+    users = requests.get(
         'https://mstdn.social/api/v1/directory?limit=40&order=new').json()
-    for i in temp:
-        usersIDs.append(temp.pop().get('id'))
+    for user in users:
+        usersIDs.append(user.get('id'))
     return usersIDs
+
+
+# get suggested users
+def suggestedUsers():
+    mastodon = login()
+    return mastodon.suggestions()
 
 
 # follow users from Mastodon's directory
@@ -56,18 +63,18 @@ def followUsers():
 # gets toots from Mastodon's timeline
 def getTootsFromPublicTimeline():
     tootsIDs = []
-    temp = requests.get('https://mstdn.social/api/v1/timelines/public').json()
-    for i in temp:
-        tootsIDs.append(temp.pop().get('id'))
+    toots = requests.get('https://mstdn.social/api/v1/timelines/public').json()
+    for toot in toots:
+        tootsIDs.append(toot.get('id'))
     return tootsIDs
 
 
 # get toots from my timeline
 def getTootsFromHomeTimeline():
     tootsIDs = []
-    temp = requests.get(f'https://mstdn.social/api/v1/timelines/home?access_token=' + access_token).json()
-    for i in temp:
-        tootsIDs.append(temp.pop().get('id'))
+    toots = requests.get(f'https://mstdn.social/api/v1/timelines/home?access_token=' + access_token).json()
+    for toot in toots:
+        tootsIDs.append(toot.get('id'))
     return tootsIDs
 
 
@@ -84,7 +91,10 @@ def retootFromHomeTimeline():
     mastodon = login()
     toots = getTootsFromHomeTimeline()
     randomNuber = random.randint(0, len(toots))
-    mastodon.status_reblog(toots[randomNuber])
+    try:
+        mastodon.status_reblog(toots[randomNuber])
+    except:
+        print("Error: no hay ningún toot para retootear")
 
 
 # set as favorite a toot from my timeline
@@ -101,3 +111,33 @@ def favoriteFromPublicTimeline():
     toots = getTootsFromPublicTimeline()
     randomNuber = random.randint(0, len(toots))
     mastodon.status_favourite(toots[randomNuber])
+
+
+# return info about my account
+def me():
+    mastodon = login()
+    return mastodon.account_verify_credentials()
+
+
+# get toots from a user
+def getTootsFromUser(userID):
+    return requests.get(f'https://mstdn.social/api/v1/accounts/{userID}/statuses?limit=40').json()
+
+
+# get replies from a toot
+def getTootsReplys(tootID):
+    return requests.get(f'https://mstdn.social/api/v1/statuses/{tootID}/context').json()
+
+
+# reply to a toot
+def replyToToots():
+    mastodon = login()
+    userID = me().get('id')
+    toots = getTootsFromUser(userID)
+    for toot in toots:
+        if toot.get('replies_count') != 0:
+            replies = getTootsReplys(toot.get('id'))
+            for reply in replies.values():
+                for i in reply:
+                    if i['in_reply_to_id'] == toot.get('id'):
+                        mastodon.status_post(f"@{i['account']['username']} {getReply()}",i['id'])

@@ -15,6 +15,11 @@ randomNuber = random.randint(5,120)
 schedule.every(randomNuber).minutes.do(mastodon_app.toot)
 schedule.every(2).week.do(mastodon_app.tootPhoto)
 schedule.every(1).week.do(mastodon_app.followUsers)
+schedule.every(1).day.do(mastodon_app.retootFromHomeTimeline)
+schedule.every(1).day.do(mastodon_app.retootFromPublicTimeline)
+schedule.every(1).day.do(mastodon_app.favoriteFromHomeTimeline)
+schedule.every(1).day.do(mastodon_app.favoriteFromPublicTimeline)
+schedule.every(10).minutes.do(mastodon_app.replyToToots)
 
 #Instagram schedule
 schedule.every(1).days.do(instagram.publishPhoto)

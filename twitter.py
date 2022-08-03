@@ -31,5 +31,5 @@ def tweet():
 def tweetPhoto():
     api = login()
     media = api.media_upload(getPhoto())
-    tweet = f"" + getDesciption() + "\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle "
+    tweet = f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle "
     api.update_status(status=tweet, media_ids=[media.media_id])
