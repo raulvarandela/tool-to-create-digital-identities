@@ -3,11 +3,18 @@
 # Description: File that use instagram API to post.
 
 from instagrapi import Client
+import random
 from DB_connect import getPhoto, getReply, getDesciption
 
-username = 'armentariofigueroacorona'
-passwd = 'UPW40NG3GUY10Zyk7UeL'
+# RogerEGonzales1's user and passwd
+username = 'RogerEGonzales1'
+passwd = 'L6poFDhOS8eBECc9sW5L'
 
+# Armentario's user and passwd
+#username = 'armentariofigueroacorona'
+#passwd = 'UPW40NG3GUY10Zyk7UeL'
+cl = Client()
+cl.login(username, passwd)
 
 def login():
     cl = Client()
@@ -41,3 +48,21 @@ def replyUsers():
 # get the comments of a photo
 def getComments(cl, mediaID):
     return cl.media_comments(mediaID, 0)
+
+
+# get users to follow
+def getUsersToFollow(cl):
+    users = ['cristiano','kyliejenner','leomessi','arianagrande','selenagomez','therock','kimkardashian','beyonce','justinbieber','kendalljenner']
+    randomNumber = random.randint(0, len(users)-1)
+    userID = cl.user_id_from_username(users[randomNumber])
+    return cl.user_followers(userID,1)
+
+
+# follow some users
+def followUsers():
+    #cl = login()
+    users = getUsersToFollow(cl)
+    for user in users:
+        print(type(user))
+        print(user)
+        cl.user_follow(user['id'])
