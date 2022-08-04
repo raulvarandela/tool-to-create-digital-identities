@@ -14,9 +14,7 @@ access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
 
 
-# connect to mastodon API
-
-
+# connect to mastodon API and login
 def login():
     return Mastodon(
         access_token = access_token,
@@ -79,7 +77,6 @@ def getTootsFromHomeTimeline():
     return tootsIDs
 
 
-
 # choose a function to favorite
 def retoot():
     ramdomNumber = random.randint(1, 2)
@@ -121,7 +118,7 @@ def favorite():
 def favoriteFromHomeTimeline():
     mastodon = login()
     toots = getTootsFromHomeTimeline()
-    randomNuber = random.randint(0, len(toots))
+    randomNuber = random.randint(0, len(toots)-1)
     mastodon.status_favourite(toots[randomNuber])
 
 
@@ -129,7 +126,7 @@ def favoriteFromHomeTimeline():
 def favoriteFromPublicTimeline():
     mastodon = login()
     toots = getTootsFromPublicTimeline()
-    randomNuber = random.randint(0, len(toots))
+    randomNuber = random.randint(0, len(toots)-1)
     mastodon.status_favourite(toots[randomNuber])
 
 
@@ -176,7 +173,7 @@ def replyToToot():
 def replyToPublicToot():
     mastodon = login()
     toots = mastodon.timeline_public()
-    randomNuber = random.randint(0, len(toots))
+    randomNuber = random.randint(0, len(toots)-1)
     mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
 
 
@@ -184,7 +181,7 @@ def replyToPublicToot():
 def replyToTimelineToot():
     mastodon = login()
     toots = mastodon.timeline_home()
-    randomNuber = random.randint(0, len(toots))
+    randomNuber = random.randint(0, len(toots)-1)
     mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
 
 

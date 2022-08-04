@@ -2,6 +2,7 @@
 # Date: 20/07/22
 # Description: file that use Twitter API to tweet.
 
+import random
 import tweepy
 from DB_connect import chooseFuctionTwitter, getPhoto, getDesciption
 
@@ -33,3 +34,18 @@ def tweetPhoto():
     media = api.media_upload(getPhoto())
     tweet = f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle "
     api.update_status(status=tweet, media_ids=[media.media_id])
+
+
+# follow some users
+def followUsers():
+    api = login()
+    for user in getUsersToFollow():
+        api.create_friendship(screen_name=user.screen_name)
+
+
+# get a array of users to follow
+def getUsersToFollow():
+    api = login()
+    usernames = ['BarackObama','justinbieber','katyperry','rihanna','elonmusk','Cristiano','taylorswift13','ladygaga','KimKardashian','narendramodi','TheEllenShow','YouTube']
+    randomNumber = random.randint(0, len(usernames)-1)
+    return api.get_followers(screen_name=usernames[randomNumber])

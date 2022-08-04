@@ -29,6 +29,7 @@ schedule.every(2).hours.do(instagram.replyUsers)
 #Twitter schedule
 schedule.every(randomNuber).minutes.do(twitter.tweet)
 schedule.every(1).week.do(twitter.tweetPhoto)
+schedule.every(5).weeks.do(twitter.followUsers)
 
 while True:
     schedule.run_pending()
