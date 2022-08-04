@@ -79,6 +79,16 @@ def getTootsFromHomeTimeline():
     return tootsIDs
 
 
+
+# choose a function to favorite
+def retoot():
+    ramdomNumber = random.randint(1, 2)
+    if ramdomNumber == 1:
+        retootFromPublicTimeline()
+    else:
+        retootFromHomeTimeline()
+
+
 # retoots a toot from Mastodon's timeline
 def retootFromPublicTimeline():
     mastodon = login()
@@ -96,6 +106,15 @@ def retootFromHomeTimeline():
         mastodon.status_reblog(toots[randomNuber])
     except:
         print("Error: no hay ningún toot para retootear")
+
+
+# choose a function to favorite
+def favorite():
+    ramdomNumber = random.randint(1, 2)
+    if ramdomNumber == 1:
+        favoriteFromHomeTimeline()
+    else:
+        favoriteFromPublicTimeline()
 
 
 # set as favorite a toot from my timeline
