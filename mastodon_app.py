@@ -186,3 +186,11 @@ def replyToTimelineToot():
     toots = mastodon.timeline_home()
     randomNuber = random.randint(0, len(toots))
     mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
+
+
+# follow back users that follow me
+def followBack():
+    mastodon = login()
+    users = mastodon.account_followers(me().get('id'))
+    for user in users:
+        mastodon.account_follow(user.get('id'))
