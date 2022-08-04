@@ -12,4 +12,4 @@ import os
 #print(type(mastodon_app.getTootsReplys(108725593191721436)))
 
 
-mastodon_app.replyToToots()
+mastodon_app.replyToToot()

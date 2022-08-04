@@ -3,8 +3,9 @@
 # Description: File that use Mastodon API to post.
 
 
+from os import access
 import random
-from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption, getReply
+from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption, getReply, getSimpleReply
 from mastodon import Mastodon
 import requests
 
@@ -129,8 +130,8 @@ def getTootsReplys(tootID):
     return requests.get(f'https://mstdn.social/api/v1/statuses/{tootID}/context').json()
 
 
-# reply to a toot
-def replyToToots():
+# reply to a comment
+def replyToComments():
     mastodon = login()
     userID = me().get('id')
     toots = getTootsFromUser(userID)
@@ -140,4 +141,29 @@ def replyToToots():
             for reply in replies.values():
                 for i in reply:
                     if i['in_reply_to_id'] == toot.get('id'):
-                        mastodon.status_post(f"@{i['account']['username']} {getReply()}",i['id'])
+                        mastodon.status_post(f"@{i['account']['acct']} {getReply()}",i['id'])
+
+
+# choose a function to reply
+def replyToToot():
+    ramdomNumber = random.randint(1, 2)
+    if ramdomNumber == 1:
+        replyToPublicToot()
+    else:
+        replyToTimelineToot()
+
+
+# reply to a ramdom toot in the public timeline
+def replyToPublicToot():
+    mastodon = login()
+    toots = mastodon.timeline_public()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
+
+
+# reply to a ramdom toot in the my timeline
+def replyToTimelineToot():
+    mastodon = login()
+    toots = mastodon.timeline_home()
+    randomNuber = random.randint(0, len(toots))
+    mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])

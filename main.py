@@ -19,7 +19,7 @@ schedule.every(1).day.do(mastodon_app.retootFromHomeTimeline)
 schedule.every(1).day.do(mastodon_app.retootFromPublicTimeline)
 schedule.every(1).day.do(mastodon_app.favoriteFromHomeTimeline)
 schedule.every(1).day.do(mastodon_app.favoriteFromPublicTimeline)
-schedule.every(10).minutes.do(mastodon_app.replyToToots)
+schedule.every(10).minutes.do(mastodon_app.replyToComments)
 
 #Instagram schedule
 schedule.every(1).days.do(instagram.publishPhoto)
