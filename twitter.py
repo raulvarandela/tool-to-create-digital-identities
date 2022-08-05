@@ -4,7 +4,7 @@
 
 import random
 import tweepy
-from DB_connect import chooseFuctionTwitter, getPhoto, getDesciption
+from DB_connect import chooseFuctionTwitter, getPhoto, getDesciption, getSimpleReply, getReply
 
 
 # conect to twitter API
@@ -49,3 +49,49 @@ def getUsersToFollow():
     usernames = ['BarackObama','justinbieber','katyperry','rihanna','elonmusk','Cristiano','taylorswift13','ladygaga','KimKardashian','narendramodi','TheEllenShow','YouTube']
     randomNumber = random.randint(0, len(usernames)-1)
     return api.get_followers(screen_name=usernames[randomNumber])
+
+
+# retweet a tweet
+def retweet():
+    api = login()
+    tweets = api.home_timeline()
+    ramdinNumber = random.randint(0, len(tweets)-1)
+    api.retweet(tweets[ramdinNumber].id)
+
+
+# set favorite a tweet
+def setFavorite():
+    api = login()
+    tweets = api.home_timeline()
+    ramdinNumber = random.randint(0, len(tweets)-1)
+    api.create_favorite(tweets[ramdinNumber].id)
+
+
+# reply a tweet
+def replyTweet():
+    api = login()
+    tweets = api.home_timeline()
+    ramdinNumber = random.randint(0, len(tweets)-1)
+    api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
+
+
+# reply to comments
+def replyComments():
+    api = login()
+    mentions = getMentions()
+    tweets = api.user_timeline()
+    for tweet in tweets:
+        for mention in mentions:
+            if tweet.id == mention.in_reply_to_status_id:
+                api.update_status(status=f"@{mention.user.screen_name} {getReply()}", in_reply_to_status_id=mention.id)
+
+
+# get mentions                
+def getMentions():
+    api = login()
+    tweets = api.mentions_timeline()
+    replies = []
+    for tweet in tweets:
+        replies.append(api.get_status(tweet.id, tweet_mode="extended"))
+    return replies
+
