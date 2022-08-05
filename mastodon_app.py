@@ -5,7 +5,7 @@
 
 from os import access
 import random
-from DB_connect import chooseFuctionMastodon, getPhoto, getDesciption, getReply, getSimpleReply
+from DB_connect import getFilosofyPhase, getPhase, getPhoto, getDesciption, getReply, getSetPhase, getSimpleReply
 from mastodon import Mastodon
 import requests
 
@@ -26,6 +26,19 @@ def login():
 def toot():
     mastodon = login()
     mastodon.toot(chooseFuctionMastodon())
+
+
+# choosea ramdom function to use
+def chooseFuctionMastodon():
+    ramdomNumber = random.randint(1, 3)
+    if ramdomNumber == 1:
+        return getFilosofyPhase()
+    elif ramdomNumber == 2:
+        return getPhase()
+    elif ramdomNumber == 3:
+        return getSetPhase()
+    else:
+        print("Error")
 
 
 # toot a photo on mastodon

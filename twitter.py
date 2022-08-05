@@ -4,7 +4,7 @@
 
 import random
 import tweepy
-from DB_connect import chooseFuctionTwitter, getPhoto, getDesciption, getSimpleReply, getReply
+from DB_connect import getPhoto, getDesciption, getSimpleReply, getReply, getSkaterPhase, getPhase, getSetPhase, getFilosofyPhase
 
 
 # conect to twitter API
@@ -26,6 +26,21 @@ def login():
 def tweet():
     api = login()
     api.update_status(chooseFuctionTwitter())
+
+
+# choosea ramdom function to use
+def chooseFuctionTwitter():
+    ramdomNumber = random.randint(1, 4)
+    if ramdomNumber == 1:
+        return getSkaterPhase()
+    elif ramdomNumber == 2:
+        return getPhase()
+    elif ramdomNumber == 3:
+        return getSetPhase()
+    elif ramdomNumber == 4:
+        return getFilosofyPhase()
+    else:
+        print("Error")
 
 
 # tweet a photo
