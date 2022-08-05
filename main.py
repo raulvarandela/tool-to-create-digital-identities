@@ -16,8 +16,8 @@ schedule.every(randomNuber).minutes.do(mastodon_app.toot)
 schedule.every(2).week.do(mastodon_app.tootPhoto)
 schedule.every(1).week.do(mastodon_app.followUsers)
 schedule.every(1).hour.do(mastodon_app.followBack)
-schedule.every(1).day.do(mastodon_app.retoot)
-schedule.every(1).day.do(mastodon_app.favorite)
+schedule.every(10).day.do(mastodon_app.retoot)
+schedule.every(20).day.do(mastodon_app.favorite)
 schedule.every(10).minutes.do(mastodon_app.replyToComments)
 schedule.every(4).hours.do(mastodon_app.replyToToot)
 
@@ -29,7 +29,11 @@ schedule.every(2).hours.do(instagram.replyUsers)
 #Twitter schedule
 schedule.every(randomNuber).minutes.do(twitter.tweet)
 schedule.every(1).week.do(twitter.tweetPhoto)
-schedule.every(5).weeks.do(twitter.followUsers)
+schedule.every(5).week.do(twitter.followUsers)
+schedule.every(1).hours.do(twitter.replyComments)
+schedule.every(10).day.do(twitter.retweet)
+schedule.every(20).day.do(twitter.setFavorite)
+schedule.every(1).day.do(twitter.replyComments)
 
 while True:
     schedule.run_pending()
