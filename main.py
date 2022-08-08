@@ -28,6 +28,7 @@ schedule.every(2).hours.do(instagram.replyUsers)
 schedule.every(2).week.do(instagram.followUsers)
 schedule.every(3).hours.do(instagram.likePhoto)
 schedule.every(1).hour.do(instagram.followBack)
+schedule.every(4).hours.do(instagram.commentPhoto)
 
 #Twitter schedule
 schedule.every(randomNuber).minutes.do(twitter.tweet)
@@ -37,6 +38,7 @@ schedule.every(1).hours.do(twitter.replyComments)
 schedule.every(10).day.do(twitter.retweet)
 schedule.every(20).day.do(twitter.setFavorite)
 schedule.every(1).day.do(twitter.replyTweet)
+schedule.every(1).hour.do(twitter.followBack)
 
 while True:
     schedule.run_pending()

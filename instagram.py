@@ -4,7 +4,7 @@
 
 from instagrapi import Client
 import random
-from DB_connect import getPhoto, getReply, getDesciption
+from DB_connect import getPhoto, getReply, getDesciption, getSimpleReply
 
 # RogerEGonzales1's user and passwd
 username = 'RogerEGonzales1'
@@ -21,20 +21,17 @@ def login():
 
 
 # upload a photo to the feed
-def publishPhoto():
-    cl = login()
+def publishPhoto(cl):
     cl.photo_upload(getPhoto(), caption= f"{getDesciption()}.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #skating #skateboy #skateboardingisawesome #skatepark #skategirls #skateboardingisforever #skateboardlife #skater #skateboards #skatelife #style #skate #skateboardingisnotacrime")
 
 
 # upload a photo to story
-def publishStory():
-    cl = login()
+def publishStory(cl):
     cl.photo_upload_to_story(getPhoto(), caption='photo')
 
 
 # reply to a user that commented on your photo
-def replyUsers():
-    cl = login()
+def replyUsers(cl):
     userID = cl.user_id_from_username(username)
     mediaIDs = cl.user_medias(userID, 3)
     for mediaID in mediaIDs:
@@ -57,16 +54,14 @@ def getUsersToFollow(cl):
 
 
 # follow some users
-def followUsers():
-    cl = login()
+def followUsers(cl):
     usersIDs = getUsersToFollow(cl)
     for user in usersIDs:
         cl.user_follow(int(user))
 
 
 # like a photo
-def likePhoto():
-    cl = login()
+def likePhoto(cl):
     myUserID = cl.user_id_from_username(username)
     myFollowing = list(cl.user_following(myUserID, 20).keys()) 
     condiction = False
@@ -80,11 +75,24 @@ def likePhoto():
 
 
 # follow back users
-def followBack():
-    cl = login()
+def followBack(cl):
     myUserID = cl.user_id_from_username(username)
     myFollowers = list(cl.user_followers(myUserID, 20).keys())
     myFollowing = list(cl.user_following(myUserID, 20).keys())
     for user in myFollowers:
         if user not in myFollowing:
             cl.user_follow(int(user))
+
+
+# comment a photo
+def commentPhoto(cl):
+    myUserID = cl.user_id_from_username(username)
+    myFollowing = list(cl.user_following(myUserID, 20).keys())
+    condiction = False
+    while not condiction:
+        ramdomNumber = random.randint(0, len(myFollowing)-1)
+        media = cl.user_medias(myFollowing[ramdomNumber], 5)
+        randomNumber = random.randint(0, 4)
+        if len(media):
+            condiction = True
+            cl.media_comment(media[randomNumber].pk, getSimpleReply())
