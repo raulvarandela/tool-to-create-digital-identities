@@ -27,7 +27,10 @@ def publishPhoto(cl):
 
 # upload a photo to story
 def publishStory(cl):
-    cl.photo_upload_to_story(getPhoto(), caption='photo')
+    story = cl.photo_upload_to_story(getPhoto(), caption='photo')
+    myUserID = cl.user_id_from_username(username)
+    cl.highlight_add_stories(cl.user_highlights(myUserID)[0].pk, [story.id])
+
 
 
 # reply to a user that commented on your photo
