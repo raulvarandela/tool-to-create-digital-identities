@@ -27,6 +27,7 @@ schedule.every(2).days.do(instagram.publishStory)
 schedule.every(2).hours.do(instagram.replyUsers)
 schedule.every(2).week.do(instagram.followUsers)
 schedule.every(3).hours.do(instagram.likePhoto)
+schedule.every(1).hour.do(instagram.followBack)
 
 #Twitter schedule
 schedule.every(randomNuber).minutes.do(twitter.tweet)

@@ -77,3 +77,14 @@ def likePhoto():
         if len(media):
             condiction = True
             cl.media_like(media[randomNumber].pk) 
+
+
+# follow back users
+def followBack():
+    cl = login()
+    myUserID = cl.user_id_from_username(username)
+    myFollowers = list(cl.user_followers(myUserID, 20).keys())
+    myFollowing = list(cl.user_following(myUserID, 20).keys())
+    for user in myFollowers:
+        if user not in myFollowing:
+            cl.user_follow(int(user))
