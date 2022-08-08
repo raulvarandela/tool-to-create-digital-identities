@@ -8,4 +8,4 @@ import json
 import os
 
 
-instagram.followUsers()
+instagram.likePhoto()

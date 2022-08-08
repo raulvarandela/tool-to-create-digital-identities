@@ -13,8 +13,6 @@ passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
 # Armentario's user and passwd
 #username = 'armentariofigueroacorona'
 #passwd = 'UPW40NG3GUY10Zyk7UeL'
-cl = Client()
-cl.login(username, passwd)
 
 def login():
     cl = Client()
@@ -64,3 +62,18 @@ def followUsers():
     usersIDs = getUsersToFollow(cl)
     for user in usersIDs:
         cl.user_follow(int(user))
+
+
+# like a photo
+def likePhoto():
+    cl = login()
+    myUserID = cl.user_id_from_username(username)
+    myFollowing = list(cl.user_following(myUserID, 20).keys()) 
+    condiction = False
+    while not condiction:
+        ramdomNumber = random.randint(0, len(myFollowing)-1)
+        media = cl.user_medias(myFollowing[ramdomNumber], 5)
+        randomNumber = random.randint(0, 4)
+        if len(media):
+            condiction = True
+            cl.media_like(media[randomNumber].pk) 
