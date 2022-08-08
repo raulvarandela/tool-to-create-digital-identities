@@ -8,7 +8,7 @@ from DB_connect import getPhoto, getReply, getDesciption
 
 # RogerEGonzales1's user and passwd
 username = 'RogerEGonzales1'
-passwd = 'L6poFDhOS8eBECc9sW5L'
+passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
 
 # Armentario's user and passwd
 #username = 'armentariofigueroacorona'
@@ -55,14 +55,12 @@ def getUsersToFollow(cl):
     users = ['cristiano','kyliejenner','leomessi','arianagrande','selenagomez','therock','kimkardashian','beyonce','justinbieber','kendalljenner']
     randomNumber = random.randint(0, len(users)-1)
     userID = cl.user_id_from_username(users[randomNumber])
-    return cl.user_followers(userID,1)
+    return list(cl.user_followers(userID,amount=20).keys())
 
 
 # follow some users
 def followUsers():
-    #cl = login()
-    users = getUsersToFollow(cl)
-    for user in users:
-        print(type(user))
-        print(user)
-        cl.user_follow(user['id'])
+    cl = login()
+    usersIDs = getUsersToFollow(cl)
+    for user in usersIDs:
+        cl.user_follow(int(user))

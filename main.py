@@ -25,6 +25,7 @@ schedule.every(4).hours.do(mastodon_app.replyToToot)
 schedule.every(1).days.do(instagram.publishPhoto)
 schedule.every(2).days.do(instagram.publishStory)
 schedule.every(2).hours.do(instagram.replyUsers)
+schedule.every(2).week.do(instagram.followUsers)
 
 #Twitter schedule
 schedule.every(randomNuber).minutes.do(twitter.tweet)
