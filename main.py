@@ -36,7 +36,7 @@ schedule.every(5).week.do(twitter.followUsers)
 schedule.every(1).hours.do(twitter.replyComments)
 schedule.every(10).day.do(twitter.retweet)
 schedule.every(20).day.do(twitter.setFavorite)
-schedule.every(1).day.do(twitter.replyComments)
+schedule.every(1).day.do(twitter.replyTweet)
 
 while True:
     schedule.run_pending()

@@ -110,3 +110,13 @@ def getMentions():
         replies.append(api.get_status(tweet.id, tweet_mode="extended"))
     return replies
 
+#follow back users
+def followBack():
+    api = login()
+    followers = api.get_followers()
+    following = api.get_friends()
+    for follower in followers:
+        if follower not in following:
+            api.create_friendship(screen_name=follower.screen_name)
+
+
