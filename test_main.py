@@ -6,4 +6,6 @@ import shutil
 import requests
 import twitter, mastodon_app, instagram, Unsplash_module,DB_connect
 
-twitter.tweetPhoto()
+cl = instagram.loginWithCookie()
+
+instagram.publishPhoto(cl)
