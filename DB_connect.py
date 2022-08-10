@@ -41,16 +41,6 @@ def getFilosofyPhase():
         return row[0]
 
 
-# choose a random image from the folder
-def getPhoto():
-    path = r"C:\\Users\\Raul\\Pictures\\TFM\\Insta"
-    random_filename = random.choice([
-        x for x in os.listdir(path)
-        if os.path.isfile(os.path.join(path, x))
-    ])
-    return f'C:\\Users\\Raul\\Pictures\\TFM\\Insta\\' + random_filename
-
-
 # get a random reply from the database
 def getReply():
     cur = connectToDB()

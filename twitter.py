@@ -4,7 +4,8 @@
 
 import random
 import tweepy
-from DB_connect import getPhoto, getDesciption, getSimpleReply, getReply, getSkaterPhase, getPhase, getSetPhase, getFilosofyPhase
+from DB_connect import getDesciption, getSimpleReply, getReply, getSkaterPhase, getPhase, getSetPhase, getFilosofyPhase
+from Unsplash_module import getPhoto, deletePhoto
 
 
 # conect to twitter API
@@ -46,9 +47,11 @@ def chooseFuctionTwitter():
 # tweet a photo
 def tweetPhoto():
     api = login()
-    media = api.media_upload(getPhoto())
+    photo = getPhoto("twitter")
+    media = api.media_upload(photo)
     tweet = f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle "
     api.update_status(status=tweet, media_ids=[media.media_id])
+    deletePhoto(photo)
 
 
 # follow some users

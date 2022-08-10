@@ -4,7 +4,7 @@
 
 from instagrapi import Client
 import random
-from DB_connect import getPhoto, getReply, getDesciption, getSimpleReply
+from DB_connect import getReply, getDesciption, getSimpleReply
 
 # RogerEGonzales1's user and passwd
 username = 'RogerEGonzales1'
