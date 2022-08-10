@@ -5,6 +5,7 @@
 from instagrapi import Client
 import random
 from DB_connect import getReply, getDesciption, getSimpleReply
+from Unsplash_module import getPhoto, deletePhoto
 
 # RogerEGonzales1's user and passwd
 username = 'RogerEGonzales1'
@@ -22,14 +23,18 @@ def login():
 
 # upload a photo to the feed
 def publishPhoto(cl):
-    cl.photo_upload(getPhoto(), caption= f"{getDesciption()}.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #skating #skateboy #skateboardingisawesome #skatepark #skategirls #skateboardingisforever #skateboardlife #skater #skateboards #skatelife #style #skate #skateboardingisnotacrime")
+    photo = getPhoto('instagram')
+    cl.photo_upload(photo, caption= f"{getDesciption()}.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n.\n#skateboard #skateboardingisawesomeasfuck #skatevibes #skateboardd #skateparklife #skatebordinglife #skatelifestyle #skateboardwithfriends #skateboardingisfun #skatesyle #skatergirl #skatebaordingsavedmylife #skaterboy #skatebaordheart #skateboardingismylife #skateboardtable #skating #skateboy #skateboardingisawesome #skatepark #skategirls #skateboardingisforever #skateboardlife #skater #skateboards #skatelife #style #skate #skateboardingisnotacrime")
+    deletePhoto(photo)
 
 
 # upload a photo to story
 def publishStory(cl):
-    story = cl.photo_upload_to_story(getPhoto(), caption='photo')
+    photo = getPhoto('instagram')
+    story = cl.photo_upload_to_story(photo, caption='photo')
     myUserID = cl.user_id_from_username(username)
     cl.highlight_add_stories(cl.user_highlights(myUserID)[0].pk, [story.id])
+    deletePhoto(photo)
 
 
 
