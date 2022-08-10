@@ -8,6 +8,29 @@ from DB_connect import getDesciption, getSimpleReply, getReply, getSkaterPhase, 
 from Unsplash_module import getPhoto, deletePhoto
 
 
+# main function
+def main(fuction):
+
+    if fuction == "publishText":
+        publishText()
+    elif fuction == "publishPhoto":
+        publishPhoto()
+    elif fuction == "boost":
+        boost()
+    elif fuction == "replyComments":
+        replyComments()
+    elif fuction == "publishComment":
+        publishComment()
+    elif fuction == "like":
+        like()
+    elif fuction == "followUsers":
+        followUsers()
+    elif fuction == "followBack":
+        followBack() #acabar de testear
+    else:
+        print('Error: invalid function')
+
+
 # conect to twitter API
 def login():
     consumer_key = 'CCZdCZAHh2ESerJW8C9g7mXXW'
@@ -24,7 +47,7 @@ def login():
 
 
 # tweet a phrase
-def tweet():
+def publishText():
     api = login()
     api.update_status(chooseFuctionTwitter())
 
@@ -45,7 +68,7 @@ def chooseFuctionTwitter():
 
 
 # tweet a photo
-def tweetPhoto():
+def publishPhoto():
     api = login()
     photo = getPhoto("twitter")
     media = api.media_upload(photo)
@@ -54,44 +77,13 @@ def tweetPhoto():
     deletePhoto(photo)
 
 
-# follow some users
-def followUsers():
-    api = login()
-    for user in getUsersToFollow():
-        api.create_friendship(screen_name=user.screen_name)
-
-
-# get a array of users to follow
-def getUsersToFollow():
-    api = login()
-    usernames = ['BarackObama','justinbieber','katyperry','rihanna','elonmusk','Cristiano','taylorswift13','ladygaga','KimKardashian','narendramodi','TheEllenShow','YouTube']
-    randomNumber = random.randint(0, len(usernames)-1)
-    return api.get_followers(screen_name=usernames[randomNumber])
-
-
 # retweet a tweet
-def retweet():
+def boost():
     api = login()
     tweets = api.home_timeline()
     ramdinNumber = random.randint(0, len(tweets)-1)
     api.retweet(tweets[ramdinNumber].id)
-
-
-# set favorite a tweet
-def setFavorite():
-    api = login()
-    tweets = api.home_timeline()
-    ramdinNumber = random.randint(0, len(tweets)-1)
-    api.create_favorite(tweets[ramdinNumber].id)
-
-
-# reply a tweet
-def replyTweet():
-    api = login()
-    tweets = api.home_timeline()
-    ramdinNumber = random.randint(0, len(tweets)-1)
-    api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
-
+    
 
 # reply to comments
 def replyComments():
@@ -112,6 +104,38 @@ def getMentions():
     for tweet in tweets:
         replies.append(api.get_status(tweet.id, tweet_mode="extended"))
     return replies
+
+
+# reply a tweet
+def publishComment():
+    api = login()
+    tweets = api.home_timeline()
+    ramdinNumber = random.randint(0, len(tweets)-1)
+    api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
+
+
+# set favorite a tweet
+def like():
+    api = login()
+    tweets = api.home_timeline()
+    ramdinNumber = random.randint(0, len(tweets)-1)
+    api.create_favorite(tweets[ramdinNumber].id)
+
+
+# follow some users
+def followUsers():
+    api = login()
+    for user in getUsersToFollow():
+        api.create_friendship(screen_name=user.screen_name)
+
+
+# get a array of users to follow
+def getUsersToFollow():
+    api = login()
+    usernames = ['BarackObama','justinbieber','katyperry','rihanna','elonmusk','Cristiano','taylorswift13','ladygaga','KimKardashian','narendramodi','TheEllenShow','YouTube']
+    randomNumber = random.randint(0, len(usernames)-1)
+    return api.get_followers(screen_name=usernames[randomNumber])
+
 
 #follow back users
 def followBack():

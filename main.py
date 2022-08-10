@@ -5,41 +5,29 @@
 import twitter 
 import mastodon_app 
 import instagram
-import time
-import schedule
-import random
+import sys
 
-randomNuber = random.randint(5,120)
+def main(argv):
 
-#mastodon schedule
-schedule.every(randomNuber).minutes.do(mastodon_app.toot)
-schedule.every(3).days.do(mastodon_app.tootPhoto)
-schedule.every(7).days.do(mastodon_app.followUsers)
-schedule.every(1).hour.do(mastodon_app.followBack)
-schedule.every(2).hours.do(mastodon_app.retoot)
-schedule.every(2).hours.do(mastodon_app.favorite)
-schedule.every(10).minutes.do(mastodon_app.replyToComments)
-schedule.every(4).hours.do(mastodon_app.replyToToot)
+    if len(argv) < 3:
+        print("You need to pass the name of the social network as an argument and the name of the fuction to execute.")
+        return
 
-#Instagram schedule
-schedule.every(1).days.do(instagram.publishPhoto)
-schedule.every(2).days.do(instagram.publishStory)
-schedule.every(2).hours.do(instagram.replyUsers)
-schedule.every(3).days.do(instagram.followUsers)
-schedule.every(3).hours.do(instagram.likePhoto)
-schedule.every(1).hour.do(instagram.followBack)
-schedule.every(4).hours.do(instagram.commentPhoto)
+    if argv[1] != "twitter" and argv[1] != "instagram" and argv[1] != "mastodon":
+        print("The social network you passed is not valid.")
+        return
 
-#Twitter schedule
-schedule.every(randomNuber).minutes.do(twitter.tweet)
-schedule.every(7).days.do(twitter.tweetPhoto)
-schedule.every(5).days.do(twitter.followUsers)
-schedule.every(1).hours.do(twitter.replyComments)
-schedule.every(5).hours.do(twitter.retweet)
-schedule.every(2).hours.do(twitter.setFavorite)
-schedule.every(1).day.do(twitter.replyTweet)
-schedule.every(1).hour.do(twitter.followBack)
+    if argv[1] == "twitter" :
+        twitter.main(argv[2])
+    elif argv[1] == "instagram":
+        instagram.main(argv[2])
+    elif argv[1] == "mastodon" :
+        mastodon_app.main(argv[2])
 
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+    print ('Number of arguments:', len(argv), 'arguments.')
+    print ('Argument List:', str(argv))
+
+
+
+if __name__ == "__main__":
+    main(sys.argv)
