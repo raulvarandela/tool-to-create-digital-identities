@@ -6,7 +6,7 @@ import sqlite3
 import random
 import os
 
-
+# connect to the database
 def connectToDB():
     con = sqlite3.connect('base de datos.db')
     cur = con.cursor()
@@ -70,3 +70,17 @@ def getDesciption():
     cur = connectToDB()
     for row in cur.execute('SELECT text FROM comentarios_fotos ORDER BY RANDOM() LIMIT 1;'):
         return row[0]
+
+
+# check if the hash is already in the database
+def getHash(hash, rrss):
+    cur = connectToDB()
+    for row in cur.execute(f'SELECT hash FROM hashs_photos WHERE hash = "{hash}" AND RRSS = "{rrss}";'):
+        return row[0]
+
+
+# add a hash to the database
+def addHash(hash,rrss):
+    cur = connectToDB()
+    cur.execute(f'INSERT INTO hashs_photos(hash,RRSS) VALUES ("{hash}","{rrss}");')
+    cur.connection.commit()

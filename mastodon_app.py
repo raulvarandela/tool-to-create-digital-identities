@@ -5,10 +5,10 @@
 
 from os import access
 import random
-from DB_connect import getFilosofyPhase, getPhase, getPhoto, getDesciption, getReply, getSetPhase, getSimpleReply
+from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply
 from mastodon import Mastodon
 import requests
-
+from Unsplash_module import getPhoto, deletePhoto
 
 access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
@@ -44,9 +44,11 @@ def chooseFuctionMastodon():
 # toot a photo on mastodon
 def tootPhoto():
     mastodon = login()
-    media = mastodon.media_post(getPhoto())
+    photo = getPhoto("mastodon")
+    media = mastodon.media_post(photo)
     mastodon.status_post(
         f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle ", media_ids=media)
+    deletePhoto(photo)
 
 
 # get users from Mastodon's diorectory
