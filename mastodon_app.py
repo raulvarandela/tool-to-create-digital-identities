@@ -69,9 +69,13 @@ def publishPhoto():
     mastodon = login()
     photo = getPhoto("mastodon")
     media = mastodon.media_post(photo)
-    mastodon.status_post(
+    try:
+        mastodon.status_post(
         f"{getDesciption()}\n\n\n\n#skate #skateboarding #skater #sk8 #SkateAndDestroy #skatevibes #skatelifestyle ", media_ids=media)
-    deletePhoto(photo)
+    except mastodon.Mastodon.MastodonAPIError as e:
+        print(e)
+    finally:
+        deletePhoto(photo)
 
 
 # choose a function to favorite

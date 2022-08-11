@@ -71,7 +71,7 @@ def publishPhoto(cl):
 
 # upload a photo to story
 def publishStory(cl):
-    photo = getPhoto('instagram')
+    photo = getPhoto('instagram_story')
     story = cl.photo_upload_to_story(photo, caption='photo')
     myUserID = cl.user_id_from_username(username)
     cl.highlight_add_stories(cl.user_highlights(myUserID)[0].pk, [story.id])
@@ -116,7 +116,7 @@ def like(cl):
         ramdomNumber = random.randint(0, len(myFollowing)-1)
         media = cl.user_medias(myFollowing[ramdomNumber], 5)
         randomNumber = random.randint(0, 4)
-        if len(media):
+        if len(media) and media is not None:
             condiction = True
             cl.media_like(media[randomNumber].pk)
 

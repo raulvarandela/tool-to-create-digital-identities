@@ -9,12 +9,20 @@ import DB_connect
 
 # get a random photo from Unsplash API
 def getPhoto(rrss):
-    request = requests.get(f'https://api.unsplash.com/search/photos/?client_id=p3bC3AHbsXuo_X89P_V4gSe6x2xcX2n9zAy6CN1C2HY&query=skate').json()
-    randomNumber = random.randint(0, 9)
+    page = 1
+    i = 0
+    request = requests.get(f'https://api.unsplash.com/search/photos/?query=skate&client_id=p3bC3AHbsXuo_X89P_V4gSe6x2xcX2n9zAy6CN1C2HY&page={page}&per_page=30').json()
+    randomNumber = random.randint(0, 29)
 
     condiction = True
 
     while condiction:
+
+        if i == 29:
+            page += 1
+            i = 0
+            request = requests.get(f'https://api.unsplash.com/search/photos/?query=skate&client_id=p3bC3AHbsXuo_X89P_V4gSe6x2xcX2n9zAy6CN1C2HY&page={page}&per_page=30').json()
+
         photo = request.get('results')[randomNumber]
         res = requests.get(photo.get('urls').get('full'), stream = True)
         file_name = f'./media/{photo.get("id")}.jpg'
@@ -28,7 +36,8 @@ def getPhoto(rrss):
         
         if checkHash(calculateHash(file_name), rrss):
             deletePhoto(file_name)
-            randomNumber = random.randint(0, 9)
+            randomNumber = random.randint(0, 29)
+            i += 1
         else:
             condiction = False
             DB_connect.addHash(calculateHash(file_name), rrss)
