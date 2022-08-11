@@ -24,8 +24,8 @@ def main(argv):
     elif argv[1] == "mastodon" :
         mastodon_app.main(argv[2])
 
-    print ('Number of arguments:', len(argv), 'arguments.')
-    print ('Argument List:', str(argv))
+    print ('Done!')
+    
 
 
 

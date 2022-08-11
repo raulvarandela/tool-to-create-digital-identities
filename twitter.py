@@ -26,7 +26,7 @@ def main(fuction):
     elif fuction == "followUsers":
         followUsers()
     elif fuction == "followBack":
-        followBack() #acabar de testear
+        followBack()
     else:
         print('Error: invalid function')
 
@@ -110,8 +110,20 @@ def getMentions():
 def publishComment():
     api = login()
     tweets = api.home_timeline()
-    ramdinNumber = random.randint(0, len(tweets)-1)
-    api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
+    condiction = True
+    while condiction:
+        ramdinNumber = random.randint(0, len(tweets)-1)
+        if not isRetweet(tweets[ramdinNumber]):
+            api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
+            condiction = False
+
+
+# check if the tweet is a retweet
+def isRetweet(tweet):
+    if hasattr(tweet, 'retweeted_status'):
+        return True
+    else:
+        return False
 
 
 # set favorite a tweet
@@ -145,5 +157,3 @@ def followBack():
     for follower in followers:
         if follower not in following:
             api.create_friendship(screen_name=follower.screen_name)
-
-
