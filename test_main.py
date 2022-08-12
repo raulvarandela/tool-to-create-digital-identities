@@ -6,4 +6,6 @@ import shutil
 import requests
 import twitter, mastodon_app, instagram, Unsplash_module,DB_connect
 
-print(twitter.test()[0].text)
+for i in mastodon_app.searchToots().hashtags:
+    print(i)
+    print('\n')

@@ -2,8 +2,7 @@
 # Date: 20/07/22
 # Description: File that use Mastodon API to post.
 
-
-from os import access
+# import libraries
 import random
 from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply
 from mastodon import Mastodon
@@ -51,7 +50,7 @@ def publishText():
     mastodon.toot(chooseFuctionMastodon())
 
 
-# choosea ramdom function to use
+# choose a ramdom function to use
 def chooseFuctionMastodon():
     ramdomNumber = random.randint(1, 3)
     if ramdomNumber == 1:
@@ -80,31 +79,16 @@ def publishPhoto():
 
 # choose a function to favorite
 def boost():
-    ramdomNumber = random.randint(1, 2)
-    if ramdomNumber == 1:
-        retootFromPublicTimeline()
-    else:
-        retootFromHomeTimeline()
-
-
-# retoots a toot from Mastodon's timeline
-def retootFromPublicTimeline():
     mastodon = login()
-    toots = getTootsFromPublicTimeline()
-    randomNuber = random.randint(0, len(toots))
-    mastodon.status_reblog(toots[randomNuber])
-
-
-# retoots a toot from my timeline
-def retootFromHomeTimeline():
-    mastodon = login()
-    toots = getTootsFromHomeTimeline()
-    randomNuber = random.randint(0, len(toots))
-    try:
-        mastodon.status_reblog(toots[randomNuber])
-    except:
-        print("Error: no hay ningún toot para retootear")
-
+    toots = searchToots().statuses
+    randomNuber = random.randint(0, len(toots)-1)
+    condiction = True
+    while condiction:
+        if toots[randomNuber].account.username != 'RogerEGonzales1':
+            mastodon.status_reblog(toots[randomNuber].id)
+            condiction = False
+        else:
+            randomNuber = random.randint(0, len(toots)-1)
 
 # reply to a comment
 def replyComments():
@@ -136,73 +120,28 @@ def getTootsReplys(tootID):
     return requests.get(f'https://mstdn.social/api/v1/statuses/{tootID}/context').json()
 
 
-# choose a function to reply
+# publish a comment
 def publishComment():
-    ramdomNumber = random.randint(1, 2)
-    if ramdomNumber == 1:
-        CommentPublicToot()
-    else:
-        commentTimelineToot()
-
-
-# reply to a ramdom toot in the public timeline
-def CommentPublicToot():
     mastodon = login()
-    toots = mastodon.timeline_public()
+    toots = searchToots().statuses
     randomNuber = random.randint(0, len(toots)-1)
-    mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
+    if toots[randomNuber].account.username != 'RogerEGonzales1':
+        mastodon.status_post(f"@{toots[randomNuber].account.username} {getSimpleReply()}",toots[randomNuber].id)
 
 
-# reply to a ramdom toot in the my timeline
-def commentTimelineToot():
-    mastodon = login()
-    toots = mastodon.timeline_home()
-    randomNuber = random.randint(0, len(toots)-1)
-    mastodon.status_post(f"@{toots[randomNuber]['account']['acct']} {getSimpleReply()}",toots[randomNuber]['id'])
-
-
-# choose a function to favorite
+# set as favorite a toot
 def like():
-    ramdomNumber = random.randint(1, 2)
-    if ramdomNumber == 1:
-        favoriteFromHomeTimeline()
-    else:
-        favoriteFromPublicTimeline()
-
-
-# set as favorite a toot from my timeline
-def favoriteFromHomeTimeline():
     mastodon = login()
-    toots = getTootsFromHomeTimeline()
+    toots = searchToots().statuses
     randomNuber = random.randint(0, len(toots)-1)
-    mastodon.status_favourite(toots[randomNuber])
+    if toots[randomNuber].account.username != 'RogerEGonzales1':
+        mastodon.status_favourite(toots[randomNuber].id)
 
-
-#set as favorite a toot from Mastodon's timeline
-def favoriteFromPublicTimeline():
-    mastodon = login()
-    toots = getTootsFromPublicTimeline()
-    randomNuber = random.randint(0, len(toots)-1)
-    mastodon.status_favourite(toots[randomNuber])
     
-
-# gets toots from Mastodon's timeline
-def getTootsFromPublicTimeline():
-    tootsIDs = []
-    toots = requests.get('https://mstdn.social/api/v1/timelines/public').json()
-    for toot in toots:
-        tootsIDs.append(toot.get('id'))
-    return tootsIDs
-
-
-# get toots from my timeline
-def getTootsFromHomeTimeline():
-    tootsIDs = []
-    toots = requests.get(f'https://mstdn.social/api/v1/timelines/home?access_token=' + access_token).json()
-    for toot in toots:
-        tootsIDs.append(toot.get('id'))
-    return tootsIDs
-
+# search toots
+def searchToots():
+    mastodon = login()
+    return mastodon.search_v2('skate')
 
 # follow users from Mastodon's directory
 def followUsers():
