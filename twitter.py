@@ -80,9 +80,12 @@ def publishPhoto():
 # retweet a tweet
 def boost():
     api = login()
-    tweets = api.home_timeline()
-    ramdinNumber = random.randint(0, len(tweets)-1)
-    api.retweet(tweets[ramdinNumber].id)
+    try:
+        api.retweet(searchTweet().id)
+    except tweepy.errors.Forbidden as e:
+        print("Error: ", e)
+
+    
     
 
 # reply to comments
@@ -109,12 +112,11 @@ def getMentions():
 # reply a tweet
 def publishComment():
     api = login()
-    tweets = api.home_timeline()
     condiction = True
     while condiction:
-        ramdinNumber = random.randint(0, len(tweets)-1)
-        if not isRetweet(tweets[ramdinNumber]):
-            api.update_status(status=f"@{tweets[ramdinNumber].user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweets[ramdinNumber].id)
+        tweet = searchTweet()
+        if not isRetweet(tweet):
+            api.update_status(status=f"@{tweet.user.screen_name} {getSimpleReply()}", in_reply_to_status_id=tweet.id)
             condiction = False
 
 
@@ -129,10 +131,20 @@ def isRetweet(tweet):
 # set favorite a tweet
 def like():
     api = login()
-    tweets = api.home_timeline()
-    ramdinNumber = random.randint(0, len(tweets)-1)
-    api.create_favorite(tweets[ramdinNumber].id)
+    try:
+        api.create_favorite(searchTweet().id)
+    except tweepy.errors.Forbidden as e:
+        print("Error: ", e)
 
+
+# search a tweet
+def searchTweet():
+    api = login()
+    topic = ['skateboarding', 'Green Day', 'Blink-182', 'X-games']
+    randomNumber = random.randint(0, len(topic)-1)
+    tweets = api.search_tweets(q=topic[randomNumber], lang="en", rpp=10)
+    randomNum = random.randint(0, len(tweets)-1)
+    return tweets[randomNum]
 
 # follow some users
 def followUsers():
