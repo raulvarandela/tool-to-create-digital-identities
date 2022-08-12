@@ -94,17 +94,6 @@ def publishComment(cl):
     randomNumber = random.randint(0, len(photos)-1)
     cl.media_comment(photos[randomNumber].pk, getSimpleReply())
 
-    '''myUserID = cl.user_id_from_username(username)
-    myFollowing = list(cl.user_following(myUserID, 20).keys())
-    condiction = False
-    while not condiction:
-        ramdomNumber = random.randint(0, len(myFollowing)-1)
-        media = cl.user_medias(myFollowing[ramdomNumber], 5)
-        randomNumber = random.randint(0, 4)
-        if len(media):
-            condiction = True
-            cl.media_comment(media[randomNumber].pk, getSimpleReply())'''
-
 
 # get the comments of a photo
 def getComments(cl, mediaID):
