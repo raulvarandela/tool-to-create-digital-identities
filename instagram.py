@@ -14,7 +14,7 @@ from Unsplash_module import getPhoto, deletePhoto
 
 # Armentario's user and passwd
 username = 'armentariofigueroacorona'
-passwd = 'UPW40NG3GUY10Zyk7UeL'
+passwd = 'jXUh3V2vhfYSoo8dLRYh'
 
 
 # main function
@@ -90,7 +90,11 @@ def replyComments(cl):
 
 # comment a photo
 def publishComment(cl):
-    myUserID = cl.user_id_from_username(username)
+    photos = searchHashtag(cl)
+    randomNumber = random.randint(0, len(photos)-1)
+    cl.media_comment(photos[randomNumber].pk, getSimpleReply())
+
+    '''myUserID = cl.user_id_from_username(username)
     myFollowing = list(cl.user_following(myUserID, 20).keys())
     condiction = False
     while not condiction:
@@ -99,7 +103,7 @@ def publishComment(cl):
         randomNumber = random.randint(0, 4)
         if len(media):
             condiction = True
-            cl.media_comment(media[randomNumber].pk, getSimpleReply())
+            cl.media_comment(media[randomNumber].pk, getSimpleReply())'''
 
 
 # get the comments of a photo
@@ -109,16 +113,16 @@ def getComments(cl, mediaID):
 
 # like a photo
 def like(cl):
-    myUserID = cl.user_id_from_username(username)
-    myFollowing = list(cl.user_following(myUserID, 20).keys())
-    condiction = False
-    while not condiction:
-        ramdomNumber = random.randint(0, len(myFollowing)-1)
-        media = cl.user_medias(myFollowing[ramdomNumber], 5)
-        randomNumber = random.randint(0, 4)
-        if len(media) and media is not None:
-            condiction = True
-            cl.media_like(media[randomNumber].pk)
+    photos = searchHashtag(cl)
+    randomNumber = random.randint(0, len(photos)-1)
+    cl.media_like(photos[randomNumber].pk)
+
+
+# search for photos with a hashtag
+def searchHashtag(cl):
+    tag = ['skate', 'skateboard', 'greenday', 'blink182']
+    randomNumber = random.randint(0, len(tag)-1)
+    return cl.hashtag_medias_top(tag[randomNumber] , 10)
 
 
 # follow some users
