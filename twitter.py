@@ -4,8 +4,9 @@
 
 import random
 import tweepy
-from DB_connect import getDesciption, getSimpleReply, getReply, getSkaterPhase, getPhase, getSetPhase, getFilosofyPhase
+from DB_connect import getDesciption, getSimpleReply, getReply, getSkaterPhase, getPhase, getSetPhase, getFilosofyPhase, getLastDate, addDate
 from Unsplash_module import getPhoto, deletePhoto
+from datetime import datetime
 
 
 # main function
@@ -95,8 +96,55 @@ def replyComments():
     tweets = api.user_timeline()
     for tweet in tweets:
         for mention in mentions:
-            if tweet.id == mention.in_reply_to_status_id:
+            if tweet.id == mention.in_reply_to_status_id and compareDate(tweet):
                 api.update_status(status=f"@{mention.user.screen_name} {getReply()}", in_reply_to_status_id=mention.id)
+    addDate(str(datetime.utcnow())[:-3],'twitter')
+
+
+#formart twitter's date
+def formatTwitterDate(date):
+    date = date.replace('+',' ').replace(':',' ').replace('-',' ').split(' ')
+    if date[1] == "Jan":
+        date[1] = "01"
+    elif date[1] == "Feb":
+        date[1] = "02"
+    elif date[1] == "Mar":
+        date[1] = "03" 
+    elif date[1] == "Apr":
+        date[1] = "04"
+    elif date[1] == "May":
+        date[1] = "05"
+    elif date[1] == "Jun":
+        date[1] = "06"
+    elif date[1] == "Jul":
+        date[1] = "07"
+    elif date[1] == "Aug":
+        date[1] = "08"
+    elif date[1] == "Sep":
+        date[1] = "09"
+    elif date[1] == "Oct":
+        date[1] = "10"
+    elif date[1] == "Nov":
+        date[1] = "11"
+    elif date[1] == "Dec":
+        date[1] = "12"
+    return datetime(int(date[0]), int(date[1]), int(date[2]), int(date[3]), int(date[4]), int(date[5]))
+
+
+#compare the date of the tweet with the current date
+def compareDate(tweet):
+    date = formatTwitterDate(str(tweet.created_at))
+    now = formatDate(getLastDate('twitter'))
+    if date > now:
+        return True
+    else:
+        return False
+
+
+# format dates
+def formatDate(date):
+    date = date.replace('-', ' ').replace(':', ' ').replace('.', ' ').split(' ')
+    return datetime(int(date[0]), int(date[1]), int(date[2]), int(date[3]), int(date[4]), int(date[5]))
 
 
 # get mentions                
