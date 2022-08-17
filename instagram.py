@@ -5,8 +5,9 @@
 from instagrapi import Client
 import random
 import json
-from DB_connect import getReply, getDesciption, getSimpleReply
+from DB_connect import getReply, getDesciption, getSimpleReply, getLastDate, addDate
 from Unsplash_module import getPhoto, deletePhoto
+from datetime import datetime
 
 # RogerEGonzales1's user and passwd
 username = 'RogerEGonzales1'
@@ -83,9 +84,24 @@ def replyComments(cl):
     userID = cl.user_id_from_username(username)
     mediaIDs = cl.user_medias(userID, 3)
     for mediaID in mediaIDs:
-        if mediaID.comment_count != 0:
+        if mediaID.comment_count != 0 and compareDates(mediaID.taken_at, getLastDate('instagram')):
             for coment in getComments(cl, mediaID.id):
                 cl.media_comment(mediaID.id, getReply(), coment.pk)
+    addDate(str(datetime.utcnow())[:-3],'instagram')
+
+
+#format date
+def formatDate(date):
+    date = date.replace('+',' ').replace(':',' ').replace('-',' ').replace('.',' ').split(' ')
+    return datetime(int(date[0]), int(date[1]), int(date[2]), int(date[3]), int(date[4]), int(date[5]))
+
+
+#compare dates
+def compareDates(date1, date2):
+    if formatDate(str(date1)) > formatDate(str(date2)):
+        return True
+    else:
+        return False
 
 
 # comment a photo
