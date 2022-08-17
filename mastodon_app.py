@@ -3,11 +3,14 @@
 # Description: File that use Mastodon API to post.
 
 # import libraries
+from datetime import datetime
 import random
-from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply
+from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply, getLastDate, addDate
 from mastodon import Mastodon
 import requests
 from Unsplash_module import getPhoto, deletePhoto
+from datetime import datetime
+
 
 access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
@@ -95,13 +98,34 @@ def replyComments():
     mastodon = login()
     userID = me().get('id')
     toots = getTootsFromUser(userID)
+    date = getLastDate('mastodon')
     for toot in toots:
-        if toot.get('replies_count') != 0:
+        if toot.get('replies_count') != 0 and toot.get('in_reply_to_id') is None and compareDates(date, toot.get('created_at')):
             replies = getTootsReplys(toot.get('id'))
             for reply in replies.values():
                 for i in reply:
                     if i['in_reply_to_id'] == toot.get('id'):
                         mastodon.status_post(f"@{i['account']['acct']} {getReply()}",i['id'])
+    addDate(str(datetime.utcnow())[:-3],'mastodon')
+
+
+# format mastodon's date
+def formatMastodonDate(date):
+    return date.replace('T', ' ').replace('Z', '')
+
+
+# format dates
+def formatDate(date):
+    date = date.replace('-', ' ').replace(':', ' ').replace('.', ' ').split(' ')
+    return datetime(int(date[0]), int(date[1]), int(date[2]), int(date[3]), int(date[4]), int(date[5]))
+
+   
+# compare two dates
+def compareDates(date1, date2):
+    if formatDate(date1) < formatDate(formatMastodonDate(date2)):
+        return True
+    else:
+        return False
 
 
 # return info about my account

@@ -9,12 +9,12 @@ from DB_connect import getReply, getDesciption, getSimpleReply
 from Unsplash_module import getPhoto, deletePhoto
 
 # RogerEGonzales1's user and passwd
-#username = 'RogerEGonzales1'
-#passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
+username = 'RogerEGonzales1'
+passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
 
 # Armentario's user and passwd
-username = 'armentariofigueroacorona'
-passwd = 'jXUh3V2vhfYSoo8dLRYh'
+#username = 'armentariofigueroacorona'
+#passwd = 'jXUh3V2vhfYSoo8dLRYh'
 
 
 # main function

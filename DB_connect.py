@@ -74,3 +74,15 @@ def addHash(hash,rrss):
     cur = connectToDB()
     cur.execute(f'INSERT INTO hashs_photos(hash,RRSS) VALUES ("{hash}","{rrss}");')
     cur.connection.commit()
+
+#get last date from the database
+def getLastDate(rrss):
+    cur = connectToDB()
+    for row in cur.execute(f'SELECT date FROM comments_date WHERE RRSS = "{rrss}";'):
+        return row[0]
+
+# add a date to the database
+def addDate(date,rrss):
+    cur = connectToDB()
+    cur.execute(f'UPDATE comments_date SET date = "{date}" WHERE RRSS = "{rrss}";')
+    cur.connection.commit()
