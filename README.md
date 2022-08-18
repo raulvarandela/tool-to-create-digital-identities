@@ -4,7 +4,7 @@ Automatic tool to create complete digital identities.
 ## Requirements
 
 - Have python3 installed ```sudo apt install python3```
-- Have pip installed     ```python get-pip.py```
+- Have pip installed     ```python3 get-pip.py```
 
 ## Set up
 
@@ -25,7 +25,7 @@ python main.py
 
 ## Built with :hammer_and_wrench:
 
-- [VSC](https://code.visualstudio.com/) - code editor
+- [VSC](https://code.visualstudio.com/) - Code editor
 - [GitHub Copilot](https://github.com/features/copilot) -  AI pair programmer
 - [Mastodon.py](https://github.com/halcy/Mastodon.py) - Python wrapper for the [Mastodon](https://github.com/tootsuite/mastodon/) API.
 - [instagrapi](https://github.com/adw0rd/instagrapi) - Python library for Instagram Private API
