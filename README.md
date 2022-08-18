@@ -14,7 +14,7 @@ Run the following command
 pip install -r requirements.txt
 ```
 
-# Start up
+## Start up
 
 Run the following command
 
