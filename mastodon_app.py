@@ -5,14 +5,17 @@
 # import libraries
 from datetime import datetime
 import random
-from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply, getLastDate, addDate
+from urllib import request
+from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply, getLastDate, addDate, addUser
 from mastodon import Mastodon
 import requests
 from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
+from bs4 import BeautifulSoup
+import string
 
 
-access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
+access_token = 'kN9d8jvJ6VTfc0lBn5d8kXguuHSnyG8rLbTX0mEapYo'
 api_base_url = 'https://mstdn.social/'
 
 
@@ -197,3 +200,35 @@ def followBack():
     for follower in followers:
         if follower not in following:
             mastodon.account_follow(follower.get('id'))
+
+
+# create a new account
+def createAccount():
+    access_token = '3uOnpf7O274Qd56uhRcJKOb0fWaD4tJdwz6ZGLi2gbQ'
+    api_base_url = 'https://norden.social/'
+    username = username_gen()
+    password = password_gen()
+    email = getFakeMail(username,password)
+    account = requests.post(f'{api_base_url}api/v1/accounts?access_token={access_token}&username={username}&password={password}&email={str(email["address"])}&agreement=true&locale=en').json()
+    addUser(username,email['address'],password)
+    print(account)
+
+
+# generate a random username
+def username_gen(length=24, chars= string.ascii_letters + string.digits):
+    return ''.join(random.choice(chars) for _ in range(length))  
+
+
+# generate a random password  
+def password_gen(length=16, chars= string.ascii_letters + string.digits + string.punctuation):
+    return ''.join(random.choice(chars) for _ in range(length)) 
+
+
+# get fake email
+def getFakeMail(username, password):
+    domain = 'bukhariansiddur.com'
+    url = "https://api.mail.gw/accounts"
+    payload = { "address": f"{username}@{domain}", "password": password }
+    headers = { 'Content-Type': 'application/json' }
+    data = requests.post(url, headers=headers, json=payload).json()
+    return data

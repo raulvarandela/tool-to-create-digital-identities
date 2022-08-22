@@ -86,3 +86,10 @@ def addDate(date,rrss):
     cur = connectToDB()
     cur.execute(f'UPDATE comments_date SET date = "{date}" WHERE RRSS = "{rrss}";')
     cur.connection.commit()
+
+
+# add a user to the database
+def addUser(username,email,passwd):
+    cur = connectToDB()
+    cur.execute(f'INSERT INTO mastodon_accounts(username,mail,passwd) VALUES ("{username}","{email}","{passwd}");')
+    cur.connection.commit()
