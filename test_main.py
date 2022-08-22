@@ -7,4 +7,4 @@ import requests
 import twitter, mastodon_app, instagram, Unsplash_module,DB_connect
 import datetime
 
-print(instagram.replyComments(instagram.loginWithCookie()))
+instagram.persistentLogin()

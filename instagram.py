@@ -10,12 +10,12 @@ from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
 
 # RogerEGonzales1's user and passwd
-username = 'RogerEGonzales1'
-passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
+#username = 'RogerEGonzales1'
+#passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
 
 # Armentario's user and passwd
-#username = 'armentariofigueroacorona'
-#passwd = 'jXUh3V2vhfYSoo8dLRYh'
+username = 'armentariofigueroacorona'
+passwd = 'jXUh3V2vhfYSoo8dLRYh'
 
 
 # main function
@@ -49,7 +49,7 @@ def login():
 # login to instagram and save the cookie
 def persistentLogin():
     cl = Client()
-    cl.login()
+    cl.login(username, passwd)
     json.dump(
         cl.get_settings(),
         open(f'./cookies/{username}_cookie.json', 'w')
