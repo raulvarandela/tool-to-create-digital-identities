@@ -86,8 +86,6 @@ def boost():
     except tweepy.errors.Forbidden as e:
         print("Error: ", e)
 
-    
-    
 
 # reply to comments
 def replyComments():
@@ -190,7 +188,7 @@ def searchTweet():
     api = login()
     topic = ['skateboarding', 'Green Day', 'Blink-182', 'X-games']
     randomNumber = random.randint(0, len(topic)-1)
-    tweets = api.search_tweets(q=topic[randomNumber], lang="en", rpp=10)
+    tweets = api.search_tweets(q=topic[randomNumber], lang="en")
     randomNum = random.randint(0, len(tweets)-1)
     return tweets[randomNum]
 
