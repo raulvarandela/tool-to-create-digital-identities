@@ -89,7 +89,7 @@ def addDate(date,rrss):
 
 
 # add a user to the database
-def addUser(username,email,passwd):
+def addUser(username,email,passwd,token):
     cur = connectToDB()
-    cur.execute(f'INSERT INTO mastodon_accounts(username,mail,passwd) VALUES ("{username}","{email}","{passwd}");')
+    cur.execute(f'INSERT INTO mastodon_accounts(username,mail,passwd,token) VALUES ("{username}","{email}","{passwd}","{token}");')
     cur.connection.commit()

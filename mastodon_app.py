@@ -5,6 +5,7 @@
 # import libraries
 from datetime import datetime
 import random
+from time import sleep
 from urllib import request
 from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply, getLastDate, addDate, addUser
 from mastodon import Mastodon
@@ -13,6 +14,7 @@ from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
 from bs4 import BeautifulSoup
 import string
+import re
 
 
 access_token = 'kN9d8jvJ6VTfc0lBn5d8kXguuHSnyG8rLbTX0mEapYo'
@@ -37,6 +39,8 @@ def main(fuction):
         followUsers()
     elif fuction == "followBack":
         followBack()
+    elif fuction == "createAccount":
+        createAccount()
     else:
         print('Error: invalid function')
 
@@ -210,8 +214,53 @@ def createAccount():
     password = password_gen()
     email = getFakeMail(username,password)
     account = requests.post(f'{api_base_url}api/v1/accounts?access_token={access_token}&username={username}&password={password}&email={str(email["address"])}&agreement=true&locale=en').json()
-    addUser(username,email['address'],password)
-    print(account)
+    addUser(str(username),str(email['address']),str(password),str(account['access_token']))
+    try:
+        confirmAccount(email,password)
+    except:
+        pass
+    finally:
+        return account
+
+
+#confirmate account
+def confirmAccount(email,password):
+    # get token
+    url = "https://api.mail.gw/token"
+    payload = {
+        "address": str(email["address"]) ,
+        "password": password
+    }
+    headers = { 'Content-Type': 'application/json' }
+    data = requests.post(url, headers=headers, json=payload).json()        
+    token = data["token"]
+    
+    #get messages
+    url = "https://api.mail.gw/messages"
+    payload = {
+        "Authorization": token 
+    }
+    headers = { 'Authorization': 'Bearer ' + token }
+    data = requests.get(url, headers=headers, json=payload).json()
+
+    #wait for confirmation
+    while data["hydra:totalItems"] == 0:
+        data = requests.get(url, headers=headers, json=payload).json()
+        print("----------------------------------------------------")
+        print(data)
+        sleep(10)
+
+    # get the confirmation message
+    url = f"https://api.mail.gw/messages/{data['hydra:member'][0]['id']}"
+    payload = {
+        "Authorization": token 
+    }
+    headers = { 'Authorization': 'Bearer ' + token }
+    data = requests.get(url, headers=headers, json=payload).json()
+    url = re.findall("https://[a-z.]+/auth/confirmation\?confirmation_token=\S+&redirect_to_app=true", data['text'])
+
+    # confirm account
+    requests.get(str(url[0]))
 
 
 # generate a random username
@@ -220,7 +269,7 @@ def username_gen(length=24, chars= string.ascii_letters + string.digits):
 
 
 # generate a random password  
-def password_gen(length=16, chars= string.ascii_letters + string.digits + string.punctuation):
+def password_gen(length=10, chars= string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(length)) 
 
 
