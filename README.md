@@ -31,6 +31,7 @@ python main.py
 - [instagrapi](https://github.com/adw0rd/instagrapi) - Python library for Instagram Private API
 - [Tweepy](https://www.tweepy.org/) - Python library for accessing the Twitter API
 - [Unsplash Image API](https://unsplash.com/developers) - API to get images
+- [Mail.gw](https://docs.mail.gw/) - Free anonymous temporary email
 
 ## Authors :black_nib:
 
