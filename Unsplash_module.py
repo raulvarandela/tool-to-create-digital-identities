@@ -26,9 +26,8 @@ def getPhoto(rrss):
 
         photo = request.get('results')[randomNumber]
         res = requests.get(photo.get('urls').get('full'), stream = True)
-        cwd = os.getcwd()
-        print(cwd)
-        file_name = f'{cwd}/media/{photo.get("id")}.jpg'
+        BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+        file_name = f'{BASE_DIR}/media/{photo.get("id")}.jpg'
        
         if res.status_code == 200:
             with open(file_name,'wb') as f:

@@ -61,8 +61,8 @@ def persistentLogin():
 
 # login to instagram with cookie
 def loginWithCookie():
-    cwd = os.getcwd()
-    cl = Client(json.load(open(f'{cwd}/cookies/{username}_cookie.json')))
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    cl = Client(json.load(open(f'{BASE_DIR}/cookies/{username}_cookie.json')))
     return cl
 
 
