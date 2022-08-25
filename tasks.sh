@@ -1,4 +1,6 @@
-#!/bin/bash
+# author: Raúl Varandela Marra
+# date: 25/08/2022
+# description: This script is used to execute the tasks of the project
 
 USER = 'raul'
 

@@ -36,6 +36,8 @@ Add tasks.sh to crontab
 crontab tasks.sh
 ```
 
+**Note:** change the username in tasks.sh before run the file
+
 ## Built with :hammer_and_wrench:
 
 - [VSC](https://code.visualstudio.com/) - Code editor

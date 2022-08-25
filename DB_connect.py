@@ -3,12 +3,13 @@
 # Description: File that connect to the database and get the phase.
 
 import sqlite3
-import random
-import os
+import os.path
 
 # connect to the database
 def connectToDB():
-    con = sqlite3.connect('base de datos.db')
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    db_path = os.path.join(BASE_DIR, 'base de datos.db')
+    con = sqlite3.connect(db_path)
     cur = con.cursor()
     return cur
 
