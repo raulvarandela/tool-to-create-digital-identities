@@ -5,6 +5,7 @@
 import hashlib
 import requests, random, shutil, os
 import DB_connect
+import os
 
 
 # get a random photo from Unsplash API
@@ -25,7 +26,9 @@ def getPhoto(rrss):
 
         photo = request.get('results')[randomNumber]
         res = requests.get(photo.get('urls').get('full'), stream = True)
-        file_name = f'./media/{photo.get("id")}.jpg'
+        cwd = os.getcwd()
+        print(cwd)
+        file_name = f'{cwd}/media/{photo.get("id")}.jpg'
        
         if res.status_code == 200:
             with open(file_name,'wb') as f:

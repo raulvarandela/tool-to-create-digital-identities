@@ -8,6 +8,7 @@ import json
 from DB_connect import getReply, getDesciption, getSimpleReply, getLastDate, addDate
 from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
+import os
 
 # RogerEGonzales1's user and passwd
 #username = 'RogerEGonzales1'
@@ -50,16 +51,18 @@ def login():
 def persistentLogin():
     cl = Client()
     cl.login(username, passwd)
+    cwd = os.getcwd()
     json.dump(
         cl.get_settings(),
-        open(f'./cookies/{username}_cookie.json', 'w')
+        open(f'{cwd}/cookies/{username}_cookie.json', 'w')
     )
     return cl
 
 
 # login to instagram with cookie
 def loginWithCookie():
-    cl = Client(json.load(open(f'./cookies/{username}_cookie.json')))
+    cwd = os.getcwd()
+    cl = Client(json.load(open(f'{cwd}/cookies/{username}_cookie.json')))
     return cl
 
 
