@@ -22,6 +22,19 @@ Run the following command
 python main.py
 ```
 
+## Configure crontab
+
+Give execution permissions
+
+```
+chmod ugo+x tasks.sh
+```
+
+Add tasks.sh to crontab
+
+```
+crontab tasks.sh
+```
 
 ## Built with :hammer_and_wrench:
 

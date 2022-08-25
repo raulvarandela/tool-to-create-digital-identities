@@ -17,7 +17,7 @@ import string
 import re
 
 
-access_token = 'kN9d8jvJ6VTfc0lBn5d8kXguuHSnyG8rLbTX0mEapYo'
+access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
 
 
