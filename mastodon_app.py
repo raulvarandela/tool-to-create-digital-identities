@@ -89,11 +89,13 @@ def publishPhoto():
 
 # choose a function to favorite
 def boost():
+    c = 0
     mastodon = login()
     toots = searchToots().statuses
     randomNuber = random.randint(0, len(toots)-1)
     condiction = True
-    while condiction:
+    while c != 50 and condiction:
+        c = c + 1
         if toots[randomNuber].account.username != 'RogerEGonzales1':
             mastodon.status_reblog(toots[randomNuber].id)
             condiction = False
