@@ -11,7 +11,6 @@ from datetime import datetime
 
 # main function
 def main(fuction):
-
     if fuction == "publishText":
         publishText()
     elif fuction == "publishPhoto":
@@ -44,7 +43,6 @@ def login():
     auth.set_access_token(key, secret)
 
     return tweepy.API(auth, wait_on_rate_limit=True)
-
 
 
 # tweet a phrase

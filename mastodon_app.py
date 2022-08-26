@@ -6,17 +6,15 @@
 from datetime import datetime
 import random
 from time import sleep
-from urllib import request
 from DB_connect import getFilosofyPhase, getPhase, getDesciption, getReply, getSetPhase, getSimpleReply, getLastDate, addDate, addUser
 from mastodon import Mastodon
 import requests
 from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
-from bs4 import BeautifulSoup
 import string
 import re
 
-
+# token access
 access_token = 'ULSvKPbAVCbMbI7ECqnMGZWZBimOChwSOrSFdL3I9oY'
 api_base_url = 'https://mstdn.social/'
 
@@ -43,7 +41,6 @@ def main(fuction):
         createAccount()
     else:
         print('Error: invalid function')
-
 
 
 # connect to mastodon API and login
@@ -101,6 +98,7 @@ def boost():
             condiction = False
         else:
             randomNuber = random.randint(0, len(toots)-1)
+
 
 # reply to a comment
 def replyComments():
@@ -176,11 +174,13 @@ def searchToots():
     mastodon = login()
     return mastodon.search_v2('skate')
 
+
 # follow users from Mastodon's directory
 def followUsers():
     mastodon = login()
     for i in getUsers():
         mastodon.account_follow(i)
+
 
 # get users from Mastodon's diorectory
 def getUsers():
@@ -209,8 +209,9 @@ def followBack():
 
 
 # create a new account
+# @returns  access_token for the new account, token_type, scope and created_at
 def createAccount():
-    access_token = '3uOnpf7O274Qd56uhRcJKOb0fWaD4tJdwz6ZGLi2gbQ'
+    access_token = '3uOnpf7O274Qd56uhRcJKOb0fWaD4tJdwz6ZGLi2gbQ' #token of the account that creates the new account
     api_base_url = 'https://norden.social/'
     username = username_gen()
     password = password_gen()
@@ -248,8 +249,6 @@ def confirmAccount(email,password):
     #wait for confirmation
     while data["hydra:totalItems"] == 0:
         data = requests.get(url, headers=headers, json=payload).json()
-        print("----------------------------------------------------")
-        print(data)
         sleep(10)
 
     # get the confirmation message

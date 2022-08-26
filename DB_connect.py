@@ -5,6 +5,7 @@
 import sqlite3
 import os.path
 
+
 # connect to the database
 def connectToDB():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -76,11 +77,13 @@ def addHash(hash,rrss):
     cur.execute(f'INSERT INTO hashs_photos(hash,RRSS) VALUES ("{hash}","{rrss}");')
     cur.connection.commit()
 
+
 #get last date from the database
 def getLastDate(rrss):
     cur = connectToDB()
     for row in cur.execute(f'SELECT date FROM comments_date WHERE RRSS = "{rrss}";'):
         return row[0]
+
 
 # add a date to the database
 def addDate(date,rrss):
