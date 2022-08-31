@@ -218,12 +218,8 @@ def createAccount():
     email = getFakeMail(username,password)
     account = requests.post(f'{api_base_url}api/v1/accounts?access_token={access_token}&username={username}&password={password}&email={str(email["address"])}&agreement=true&locale=en').json()
     addUser(str(username),str(email['address']),str(password),str(account['access_token']))
-    try:
-        confirmAccount(email,password)
-    except:
-        pass
-    finally:
-        return account
+    confirmAccount(email,password)
+    return account
 
 
 #confirmate account
@@ -261,11 +257,13 @@ def confirmAccount(email,password):
     url = re.findall("https://[a-z.]+/auth/confirmation\?confirmation_token=\S+&redirect_to_app=true", data['text'])
 
     # confirm account
-    requests.get(str(url[0]))
+    url = url[0]
+    url = url.replace('redirect_to_app=true', 'redirect_to_app=false')
+    requests.get(url)
 
 
 # generate a random username
-def username_gen(length=24, chars= string.ascii_letters + string.digits):
+def username_gen(length=10, chars= string.ascii_letters + string.digits):
     return ''.join(random.choice(chars) for _ in range(length))  
 
 
