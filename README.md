@@ -51,4 +51,4 @@ crontab tasks.sh
 ## Authors :black_nib:
 
 
-* **Raúl Varandela Marra** -  [rvmarra](https://github.com/rvmarra)
+* **Raúl Varandela Marra** -  [raulvarandela](https://github.com/raulvarandela)
