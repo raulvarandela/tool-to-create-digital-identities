@@ -211,8 +211,8 @@ def followBack():
 # create a new account
 # @returns  access_token for the new account, token_type, scope and created_at
 def createAccount():
-    access_token = '3uOnpf7O274Qd56uhRcJKOb0fWaD4tJdwz6ZGLi2gbQ' #token of the account that creates the new account
-    api_base_url = 'https://norden.social/'
+    access_token = '05naVcnvJPO_Syi4uJBfbp--58T9dWsloIWAbUGEmnA' #token of the account that creates the new account
+    api_base_url = 'https://mastodon.uno/'
     username = username_gen()
     password = password_gen()
     email = getFakeMail(username,password)
