@@ -10,13 +10,9 @@ from Unsplash_module import getPhoto, deletePhoto
 from datetime import datetime
 import os
 
-# RogerEGonzales1's user and passwd
-#username = 'RogerEGonzales1'
-#passwd = 'Sqt3cL9tZhV1nSiXr7Ea'
-
-# Armentario's user and passwd
-username = 'armentariofigueroacorona'
-passwd = 'jXUh3V2vhfYSoo8dLRYh'
+#  user and passwd
+username = 'username'
+passwd = 'passwd'
 
 
 # main function

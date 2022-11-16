@@ -33,11 +33,11 @@ def main(fuction):
 
 # conect to twitter API
 def login():
-    consumer_key = 'CCZdCZAHh2ESerJW8C9g7mXXW'
-    consumer_secret = 'hNWRr0RT4AKE2Ww8Xz3EQeYhZQN3UY8sTKmq7H42WrRHGi3S5y'
+    consumer_key = 'consumer_key'
+    consumer_secret = 'consumer_secret'
 
-    key = '1546791696884813824-vk0GTOOwbgEYClFwEnCHGaMQF3Bjsf'
-    secret = 'WCbbDUKqVQDjQR6RVH78f6FFwY6qGD9nfUv3I55KIydlM'
+    key = 'key'
+    secret = 'secret'
 
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(key, secret)
